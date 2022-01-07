@@ -5,7 +5,7 @@ After=weston@root.service
 
 [Service]
 Type=idle
-ExecStart=/usr/local/scripts/ui.sh
+ExecStart=/etc/scripts/ui.sh
 Restart=on-success
 RestartSec=1
 

@@ -4,7 +4,7 @@ Before=backend.service
 
 [Service]
 Type=idle
-ExecStart=/usr/local/scripts/knob.sh
+ExecStart=/etc/scripts/knob.sh
 Restart=on-success
 RestartSec=1
 

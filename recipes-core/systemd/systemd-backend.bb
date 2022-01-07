@@ -1,5 +1,3 @@
-#Add Back-end related stuff here
-
 # Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
 
 SUMMARY = "730i Backend Service"
