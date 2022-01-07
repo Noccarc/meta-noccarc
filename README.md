@@ -6,8 +6,7 @@ meta-noccarc is a layer providing the 730iSOM-STM32MP1 module and 730iCB carrier
 
 ## System image
 
-This layer should be used in order to build the st-image-weston image. It provides changes including the QT libraries and the noccarc demo application.
-
+This layer should be used in order to build the st-image-weston image.
 ## Building the system image
 
 In order to build the system image a Distribution Package provided by STMicroelectronics is required. The whole building process is described on the ST wiki pages:
@@ -23,7 +22,7 @@ cd openstlinux-5.10-dunfell-mp1-21-03-31
 repo init -u https://github.com/STMicroelectronics/oe-manifest.git -b refs/tags/openstlinux-5.10-dunfell-mp1-21-03-31
 repo sync
 cd layers/meta-st
-git clone -b dunfell https://github.com/noccarc/openst-meta-noccarc.git meta-noccarc
+git clone -b dunfell https://github.com/Noccarc-Robotics/meta-noccarc.git master
 cd ../../
 DISTRO=openstlinux-weston MACHINE=<MACHINE_NAME> source layers/meta-st/scripts/envsetup.sh
 bitbake st-image-weston
