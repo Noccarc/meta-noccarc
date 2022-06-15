@@ -22,7 +22,7 @@ cd openstlinux-5.10-dunfell-mp1-21-03-31
 repo init -u https://github.com/STMicroelectronics/oe-manifest.git -b refs/tags/openstlinux-5.10-dunfell-mp1-21-03-31
 repo sync
 cd layers/meta-st
-git clone -b dunfell https://github.com/Noccarc-Robotics/meta-noccarc.git master
+git clone -b dunfell https://github.com/Noccarc/meta-noccarc.git master
 cd ../../
 DISTRO=openstlinux-weston MACHINE=<MACHINE_NAME> source layers/meta-st/scripts/envsetup.sh
 bitbake st-image-weston
