@@ -1,12 +1,12 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-KERNEL_SRC = "git://github.com/Noccarc-Robotics/noccarc-linux-stm32mp1.git;protocol=http"
-KERNEL_BRANCH = "v5.10-stm32mp-noccarc"
+KERNEL_SRC = "git://github.com/Noccarc/noccarc-linux-stm32mp1.git;protocol=http"
+KERNEL_BRANCH = "custom-powertip"
 
 SRC_URI = "${KERNEL_SRC};branch=${KERNEL_BRANCH} \
            file://stm32mp157c_730isom_mx_defconfig \
            "
-SRCREV = "e8de30a96bba86f6b7fde59ac349349e9fab7648"
+SRCREV = "500b7f1b985a090f387abdd8e6015e120e156321"
 
 S = "${WORKDIR}/git"
 
