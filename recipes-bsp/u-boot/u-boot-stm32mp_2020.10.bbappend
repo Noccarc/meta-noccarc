@@ -1,12 +1,12 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-UBOOT_SRC = "git://github.com/Noccarc-Robotics/noccarc-uboot-stm32mp1.git;protocol=http"
+UBOOT_SRC = "git://github.com/Noccarc/noccarc-uboot-stm32mp1.git;protocol=http"
 UBOOT_BRANCH = "v2020.10-stm32mp-noccarc"
 
 SRC_URI = "${UBOOT_SRC};branch=${UBOOT_BRANCH} \
            file://stm32mp15_730isom_trusted_defconfig \
            "
-SRCREV = "3d3a0eaed7ae68fcd9919b2289443f9670879938"
+SRCREV = "e49fa0dd3e05f4ae805fcd668bf2e7a149247038"
 
 S = "${WORKDIR}/git"
 
