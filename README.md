@@ -29,8 +29,7 @@ bitbake st-image-weston
 ```
 
 The following 730iSOM machines are available:
-* stm32mp157a-730isom-rgb-emmc-mx  Module with eMMC memory and RGB display connected
-* stm32mp157a-730isom-dsi-emmc-mx  Module with eMMC memory and DSI display connected
+* stm32mp157c-v510-dsi-emmc-mx  Module with eMMC memory and DSI display connected
 
 The compiled image files are located in the directory:
 
