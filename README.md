@@ -23,7 +23,7 @@ cd openstlinux-5.10-dunfell-mp1-21-03-31
 repo init -u https://github.com/STMicroelectronics/oe-manifest.git -b refs/tags/openstlinux-5.10-dunfell-mp1-21-03-31
 repo sync
 cd layers/meta-st
-git clone https://github.com/Noccarc/meta-noccarc.git v730i_som_1V2
+git clone -b v730i_som_1V2 --single-branch https://github.com/Noccarc/meta-noccarc.git
 cd ../../
 DISTRO=openstlinux-weston MACHINE=stm32mp157c-v510-dsi-emmc-mx source layers/meta-st/scripts/envsetup.sh
 bitbake st-image-weston
