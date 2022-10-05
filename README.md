@@ -2,7 +2,7 @@
 
 ## Introduction
 
-meta-noccarc is a layer providing the 730iSOM-STM32MP1 module and 730iCB carrier board hardware support for Yocto-based OpenSTLinux system.
+meta-noccarc is a layer providing the v730i-SOM-1V2 module and v730i-HCB-1V4 carrier board hardware support for Yocto-based OpenSTLinux system.
 
 ## System image
 
@@ -16,25 +16,26 @@ https://wiki.st.com/stm32mpu/wiki/STM32MP1_Distribution_Package
 The summary of required steps is shown below:
 
 ```shell
-cd <working directory path>/Distribution-Package
+mkdir v730i-SOM-1V2-yocto
+cd ${PWD}/v730i-SOM-1V2-yocto
 mkdir openstlinux-5.10-dunfell-mp1-21-03-31
 cd openstlinux-5.10-dunfell-mp1-21-03-31
 repo init -u https://github.com/STMicroelectronics/oe-manifest.git -b refs/tags/openstlinux-5.10-dunfell-mp1-21-03-31
 repo sync
 cd layers/meta-st
-git clone https://github.com/Noccarc/meta-noccarc.git master
+git clone https://github.com/Noccarc/meta-noccarc.git v730i_som_1V2
 cd ../../
-DISTRO=openstlinux-weston MACHINE=<MACHINE_NAME> source layers/meta-st/scripts/envsetup.sh
+DISTRO=openstlinux-weston MACHINE=stm32mp157c-v510-dsi-emmc-mx source layers/meta-st/scripts/envsetup.sh
 bitbake st-image-weston
 ```
 
-The following 730iSOM machines are available:
+The following v730i-SOM-1V2 machines are available:
 * stm32mp157c-v510-dsi-emmc-mx  Module with eMMC memory and DSI display connected
 
 The compiled image files are located in the directory:
 
 ```
-openstlinux-5.10-dunfell-mp1-21-03-31/build-openstlinuxweston-<MACHINE_NAME>/tmp-glibc/deploy/images/<MACHINE_NAME>
+openstlinux-5.10-dunfell-mp1-21-03-31/build-openstlinuxweston-stm32mp157c-v510-dsi-emmc-mx/tmp-glibc/deploy/images/stm32mp157c-v510-dsi-emmc-mx/
 ```
 
 ## Installing SD card image
