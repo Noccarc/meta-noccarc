@@ -23,7 +23,6 @@ do_install() {
     install -d ${D}${systemd_unitdir}/system
     install -m 644 ${WORKDIR}/${MOUNT_BASENAME}.service ${D}/${systemd_unitdir}/system    
     install -m 755 ${WORKDIR}/${MOUNT_BASENAME}.sh ${D}/${sysconfdir}/scripts
-    sed -i "s/enable ip6tables.service/disable ip6tables.service/g" /lib/systemd/system-preset/98-iptables.preset
 
 }
 
