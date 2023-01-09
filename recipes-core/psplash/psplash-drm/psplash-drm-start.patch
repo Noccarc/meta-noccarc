@@ -1,0 +1,11 @@
+--- psplash-drm-start.service	2022-11-25 08:03:20.365911797 +0000
++++ psplash-drm-start-latest.service	2022-12-30 08:45:38.439236299 +0000
+@@ -6,7 +6,7 @@
+ DefaultDependencies=no
+ 
+ [Service]
+-ExecStart=/usr/bin/psplash-drm -w
++ExecStart=/usr/bin/psplash-drm -w -t 6000
+ 
+ [Install]
+ WantedBy=local-fs.target

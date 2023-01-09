@@ -1,0 +1,13 @@
+[Unit]
+Description= 730i FOTA Service
+Requires=weston@root.service
+after=backend.service
+
+[Service]
+Type=idle
+WorkingDirectory=/usr/local/zmq/FOTA_STM/
+ExecStart=python3 /usr/local/zmq/FOTA_STM/fota_stm.py
+
+[Install]
+WantedBy=multi-user.target
+

@@ -12,6 +12,14 @@ IMAGE_INSTALL += " \
     systemd-knob \
     systemd-ui \
     systemd-backend \
+    systemd-ota \
+    systemd-router \
+    systemd-fota \
+    tzdata \
+    qtcharts \
+    backend-mtr \
+    staticnetwork \
+    packagegroup-framework-tools \
 "
 
 CORE_IMAGE_EXTRA_INSTALL_remove = " packagegroup-st-demo"

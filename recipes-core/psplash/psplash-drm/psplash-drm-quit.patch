@@ -1,0 +1,11 @@
+--- psplash-drm-quit	2022-11-25 08:03:20.365911797 +0000
++++ psplash-drm-quit-latest	2022-12-30 10:35:41.876877044 +0000
+@@ -2,6 +2,8 @@
+ PSPLASH_PID=`pidof psplash-drm`
+ if [[ ! -z $PSPLASH_PID ]]; then
+     echo -n "Stop psplash: "
++    echo "PROGRESS 100" > /tmp/splash_fifo
++    sleep 0.5
+     echo QUIT > /tmp/splash_fifo
+     #kill -9 $PSPLASH_PID
+     echo "done."
