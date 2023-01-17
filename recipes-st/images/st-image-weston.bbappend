@@ -20,6 +20,8 @@ IMAGE_INSTALL += " \
     backend-mtr \
     staticnetwork \
     packagegroup-framework-tools \
+    power-down \
+    jsoncpp \
 "
 
 CORE_IMAGE_EXTRA_INSTALL_remove = " packagegroup-st-demo"

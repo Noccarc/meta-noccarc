@@ -4746,10 +4746,7 @@ CONFIG_IOMMU_IO_PGTABLE_LPAE=y
 #
 # Remoteproc drivers
 #
-CONFIG_REMOTEPROC=y
-# CONFIG_REMOTEPROC_CDEV is not set
-# CONFIG_REMOTEPROC_SRM_CORE is not set
-CONFIG_STM32_RPROC=y
+# CONFIG_REMOTEPROC is not set
 # end of Remoteproc drivers
 
 #

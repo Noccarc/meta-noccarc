@@ -3,4 +3,5 @@ PACKAGE_INSTALL = " \
     hmifiles \
     otafiles \
     zmqfiles \
+    login-commands \
     "
