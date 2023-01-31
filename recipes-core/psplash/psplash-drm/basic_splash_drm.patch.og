@@ -1,5 +1,5 @@
---- basic_splash_drm.c	2023-01-24 19:31:10.177257455 +0530
-+++ basic_splash_drm.c.changed	2023-01-31 11:14:13.509037533 +0530
+--- basic_splash_drm.c	2022-12-29 16:05:12.620890336 +0530
++++ basic_splash_drm_latest.c	2022-12-29 16:05:12.592890028 +0530
 @@ -27,7 +27,6 @@
  
  #include "image_header.h"
@@ -8,7 +8,7 @@
  #define SPLASH_FIFO "/tmp/splash_fifo"
  
  #define MAX_HEIGHT_THRESHOLD 720
-@@ -37,6 +36,190 @@
+@@ -37,6 +36,188 @@
  static int pipe_fd;
  static int wait = 0;
  
@@ -170,8 +170,6 @@
 +
 +int old_progress = 0;
 +
-+#define DEFAULT_SPLASH_IMAGE_INDEX     0
-+
 +// ------------ @ Deepak -end ------------------------------
 +
 +// ------------ @ Deepak Func Proto ------------------------
@@ -199,84 +197,17 @@
  //----------------------
  // Prototype
  struct modeset_dev;
-@@ -407,7 +590,7 @@
-         dreq.handle = iter->handle;
-         drmIoctl (fd, DRM_IOCTL_MODE_DESTROY_DUMB, &dreq);
- 
--        /* free allocated memory */
-+        /* free allocated memory */number_to_pix
-         free (iter);
-     }
- }
-@@ -500,6 +683,67 @@
+@@ -500,6 +681,9 @@
      }
  }
  
-+static void
-+splash_noccarc_draw_image_center (int image_code)
-+{
-+    struct modeset_dev *iter;
-+    int img_width, img_height, img_bytes_per_pixel;
-+    uint8_t *rle_data;
-+    int x, y;
-+    int i_code = image_code; 
-+
-+    for (iter = modeset_list; iter; iter = iter->next) {
-+        if (iter->width >= iter->height) {
-+            /* Default mode is landscape, ie. use image with no rotation */
-+            img_width = SPLASH_IMG_WIDTH;
-+            img_height = SPLASH_IMG_HEIGHT;
-+            img_bytes_per_pixel = SPLASH_IMG_BYTES_PER_PIXEL;
-+            switch(i_code) {
-+
-+                case 1:
-+                    rle_data = SPLASH_IMG_RLE_PIXEL_DATA_1;
-+                    break;
-+
-+                case 2:
-+                    rle_data = SPLASH_IMG_RLE_PIXEL_DATA_2;
-+                    break; 
-+
-+                default:
-+                    rle_data = SPLASH_IMG_RLE_PIXEL_DATA_0;
-+                    break;
-+            }
-+
-+        } else {
-+            /* Else portrait, ie. use image with 90 degree rotation */
-+            img_width = SPLASH_IMG_ROT_WIDTH;
-+            img_height = SPLASH_IMG_ROT_HEIGHT;
-+            img_bytes_per_pixel = SPLASH_IMG_ROT_BYTES_PER_PIXEL;
-+            switch(i_code) {
-+
-+                case 1:
-+                    rle_data = SPLASH_IMG_ROT_RLE_PIXEL_DATA_1;
-+                    break;
-+
-+                case 2:
-+                    rle_data = SPLASH_IMG_ROT_RLE_PIXEL_DATA_2;
-+                    break; 
-+
-+                default:
-+                    rle_data = SPLASH_IMG_ROT_RLE_PIXEL_DATA_0;
-+                    break;
-+            }
-+        }
-+
-+        x = (iter->width - img_width) / 2;
-+        y = (iter->height - img_height) / 2;
-+        splash_draw_image_for_modeset (iter, x, y, img_width, img_height,
-+                img_bytes_per_pixel, rle_data);
-+    }
-+}
-+
 +
 +
 +
  //-------------------------------
  // Exit function
  void
-@@ -524,7 +768,7 @@
+@@ -524,7 +708,7 @@
      command = strtok(string," ");
  
      if (!strcmp(command,"PROGRESS")) {
@@ -285,7 +216,7 @@
      }
      else if (!strcmp(command,"MSG")) {
          //psplash_draw_msg (fb, strtok(NULL,"\0"));
-@@ -596,6 +840,167 @@
+@@ -596,6 +780,167 @@
      return;
  }
  
@@ -453,33 +384,20 @@
  //-------------------------------
  // Main function
  int
-@@ -671,11 +1076,27 @@
+@@ -671,9 +1016,14 @@
      }
  
      /* draw some colors for 5seconds */
 -    modeset_draw_bgcolor (0xFF, 0xFF, 0xFF);
 -    splash_draw_image_center ();
 +    //modeset_draw_bgcolor (0x00, 0x00, 0x00); //@deepak changed from 0xffffff to 0x000000
-+    //splash_draw_image_center (); // @deepak draw actual image
-+    splash_noccarc_draw_image_center(DEFAULT_SPLASH_IMAGE_INDEX);
++    splash_draw_image_center (); // @deepak draw actual image
 +
 +    // If argument is "/usr/bin/psplash-drm -w -t 5000" 5000 mSec 
-+
+ 
 +    if (argc > 3)
 +        if (!strncasecmp(argv[2], "-t",2))
 +            splash_draw_progress_bar (atoi(argv[3]), 0xff, 0xff, 0xff); //@deepak progress bar
-+
-+    //if argument is "/usr/bin/psplash-drm -w -i <image_code>"
-+    if (argc > 3){
-+        if (!strncasecmp(argv[2], "-i",2)){
-+            splash_noccarc_draw_image_center(atoi(argv[3]));
-+        }
-+    }
-+           
- 
      splash_processing ();
  
-+
      /* cleanup everything */
-     modeset_cleanup (drm_fd);
-     close(pipe_fd);

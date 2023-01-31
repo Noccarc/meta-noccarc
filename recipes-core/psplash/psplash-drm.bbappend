@@ -3,6 +3,9 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
         file://image_header.h \
 	file://image_header_nocca.h \
+	file://reboot.h \
+	file://shutdown.h \
+	file://noccarc_psplash.h \
 	file://basic_splash_drm.patch \	
 	file://psplash-drm-quit.patch \
 	file://psplash-drm-start.patch \
