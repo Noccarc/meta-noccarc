@@ -1,0 +1,11 @@
+[Unit]
+Description= Script to disable unused service
+Requires=weston@root.service
+before=ui.service
+
+[Service]
+Type=idle
+ExecStart=/etc/scripts/remove-service.sh
+
+[Install]
+WantedBy=multi-user.target
