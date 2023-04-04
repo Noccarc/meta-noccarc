@@ -108,7 +108,14 @@
 			led-0{
 				label = "status";
 				gpios = <&gpioa 15 GPIO_ACTIVE_HIGH>;
-				linux,default-trigger = "cpu";
+				linux,default-trigger = "heartbeat";
+				default-state = "on";
+			};
+			
+			led-1{
+				label = "fan";
+				gpios = <&gpioc 3 GPIO_ACTIVE_HIGH>;
+				linux,default-trigger = "none";
 				default-state = "on";
 			};
 
@@ -123,19 +130,16 @@
 				label = "jtag";
 				gpios = <&gpioe 12 GPIO_ACTIVE_HIGH>;
 				linux,default-trigger = "none";
+				default-state = "off";
+			};
+
+			led-4{
+				label = "3v3-control";
+				gpios = <&gpiod 10 GPIO_ACTIVE_HIGH>;
+				linux,default-trigger = "none";
 				default-state = "on";
 			};
 
-		};
-
-		gpio_fan_cool: gpio_fan {
-			compatible = "gpio-fan";
-			gpios = <&gpioe 14 1>;
-			gpio-fan,speed-map = <0		0>,
-								 <6000	1>;
-			alarm-gpios = <&gpiof 4 1>;
-			#cooling-cells = <2>;
-			status="okay";
 		};
 
 		visual-alarm {
@@ -143,20 +147,16 @@
 			led-blue {
 				label = "led-blue";
 				pwms = <&pwm1 0 1000000 0>;
+				linux,default-trigger = "default-on";
+				brightness = <60>;
 				max-brightness = <127>;
 			};
-
-
 
 		   led-red {
 				label = "led-red";
 				pwms = <&pwm2 0 1000000 0>;
 				max-brightness = <127>;
-				linux,default-trigger = "default-on";
-				brightness = <60>;
 			};
-
-
 
 		   led-green {
 				label = "led-green";
@@ -182,7 +182,6 @@
 		encoder-button {
 			compatible = "gpio-keys";
 			#size-cells = <0>;
-
 			btn-1{
 				label = "ROT_SW";
 				gpios = <&gpioh 6 GPIO_ACTIVE_LOW>; 
@@ -336,7 +335,7 @@
 	};
 
 	&dsi{
-		#address-cells = <1>;
+		 #address-cells = <1>;
 		#size-cells = <0>;
 		status = "okay";
 
@@ -566,7 +565,6 @@
 					regulator-name = "v3v3_hdmi";
 					regulator-min-microvolt = <3300000>;
 					regulator-max-microvolt = <3300000>;
-					regulator-always-on;
 					interrupts = <IT_CURLIM_LDO2 0>;
 				};
 
@@ -595,7 +593,6 @@
 					regulator-name = "v1v2_hdmi";
 					regulator-min-microvolt = <1200000>;
 					regulator-max-microvolt = <1200000>;
-					regulator-always-on;
 					interrupts = <IT_CURLIM_LDO6 0>;
 				};
 
@@ -854,7 +851,7 @@
 		/* Enable DMA "ch1" for PWM input on TIM1_CH1 */
 		dmas = <&dmamux1 13 0x400 0x80000001>;
 		dma-names = "ch3";
-		status = "disabled";
+		status = "okay";
 		/* USER CODE END timers3 */
 		
 		pwm {
