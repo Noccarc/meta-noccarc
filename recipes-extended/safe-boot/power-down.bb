@@ -1,5 +1,7 @@
 # Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
 
+# This recipe installs the power_down.sh script to /etc/scripts
+
 SUMMARY = "730i Power down Service"
 DEPENDS = "systemd"
 LICENSE = "MIT"

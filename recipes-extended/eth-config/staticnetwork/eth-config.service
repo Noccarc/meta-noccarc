@@ -1,3 +1,8 @@
+# Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+
+# This service calls the eth-config.sh script located in /etc/scripts/
+# Should be called before knob.service
+
 [Unit]
 Description= 730i Static Network Service
 Before=knob.service

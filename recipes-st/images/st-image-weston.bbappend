@@ -12,7 +12,6 @@ IMAGE_INSTALL += " \
     systemd-knob \
     systemd-ui \
     systemd-backend \
-    systemd-ota \
     systemd-router \
     systemd-fota \
     tzdata \
@@ -21,7 +20,16 @@ IMAGE_INSTALL += " \
     staticnetwork \
     packagegroup-framework-tools \
     power-down \
+    login-commands \
     jsoncpp \
+    usb-udev \
 "
 
+IMAGE_FEATURES_append += "ssh-server-openssh"
+
+
+IMAGE_FEATURES_remove += " \
+			ssh-server-dropbear \ 
+			debug-tweaks \
+			"
 CORE_IMAGE_EXTRA_INSTALL_remove = " packagegroup-st-demo"

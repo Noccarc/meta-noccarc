@@ -1,5 +1,7 @@
 # Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
 
+# This recipe installs the backend monitoring service to target
+
 SUMMARY = "730i UI Service"
 DEPENDS = "systemd"
 LICENSE = "MIT"

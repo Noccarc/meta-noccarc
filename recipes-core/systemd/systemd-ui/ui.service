@@ -1,3 +1,8 @@
+# Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+
+# This service calls the ui.sh script located in /etc/scripts/
+# Requires the weston@root service to be up for it to execute successfully
+
 [Unit]
 Description= 730i UI Service
 Requires=weston@root.service

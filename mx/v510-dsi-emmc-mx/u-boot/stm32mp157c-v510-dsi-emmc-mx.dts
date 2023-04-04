@@ -128,14 +128,29 @@
 			linux,default-trigger = "none";
 			default-state = "on";
 		};
-		led-4{
-			label = "red-led";
-			gpios = <&gpioa 6 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "none";
-			default-state = "on";
-		};
 		
-		led-5{
+		led-4{
+            label = "red-led";
+            gpios = <&gpioa 6 GPIO_ACTIVE_HIGH>;
+            linux,default-trigger = "none";
+            default-state = "on";
+        };
+
+        led-5{
+            label = "red-green";
+            gpios = <&gpiob 8 GPIO_ACTIVE_HIGH>;
+            linux,default-trigger = "none";
+            default-state = "on";
+        };
+
+        led-6{
+            label = "red-blue";
+            gpios = <&gpiog 8 GPIO_ACTIVE_HIGH>;
+            linux,default-trigger = "none";
+            default-state = "off";
+		};
+
+		led-7{
 			label = "display";
 			gpios = <&gpiof 8 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "none";
@@ -541,15 +556,6 @@
 	clock-frequency = <400000>;
 	/delete-property/ dmas;
 	/delete-property/ dma-names;
-	
-	//bridge@2c {
-		//compatible = "tianma,nlb150xg01-01";
-		//status = "okay";
-		//reg = <0x2c>;
-		//power-supply = <&vdd>;
-		//enable-gpios = <&gpiob 10 GPIO_ACTIVE_HIGH>;
-		//host-dsi-node = <&dsi>;      
-    //};
 	
 	pmic:stpmic@33{
 		compatible = "st,stpmic1";

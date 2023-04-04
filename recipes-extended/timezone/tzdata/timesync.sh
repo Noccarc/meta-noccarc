@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+# Time sync script for SOM. Syncs SOM system time and RTC to 
+# IOMT system time. 
+
 Iomt_date=$(ssh root@192.168.0.2 /bin/date)
 
 if [ $? -eq 0 ]

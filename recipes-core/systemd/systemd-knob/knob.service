@@ -1,3 +1,8 @@
+# Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+
+# This service calls the knob configuration script located at /etc/scripts/
+# Should be run before V730i backend service
+
 [Unit]
 Description= 730i Knob Service
 Before=backend.service

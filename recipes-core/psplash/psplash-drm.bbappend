@@ -1,3 +1,9 @@
+# Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+
+# This recipe patches the source files of psplash to add 
+# progress bar features, image header and modify the psplash 
+# services for boot progress screen 
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += " \

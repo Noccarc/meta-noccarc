@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+
+# This script disables the unnecessary services in SOM
+# Called by reove-service.service located at /lib/systemd/system
+ 
 Exp_result="disabled"
 
 #Check pulseaudio.service
