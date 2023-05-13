@@ -12,8 +12,10 @@ IMAGE_INSTALL += " \
     systemd-knob \
     systemd-ui \
     systemd-backend \
+    systemd-ota \
     systemd-router \
     systemd-fota \
+    systemd-remove \
     tzdata \
     qtcharts \
     backend-mtr \
@@ -23,6 +25,9 @@ IMAGE_INSTALL += " \
     login-commands \
     jsoncpp \
     usb-udev \
+    reboot-service \
+    shutdown-service \
+    ota-unpack \
 "
 
 IMAGE_FEATURES_append += "ssh-server-openssh"
