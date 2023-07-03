@@ -1,0 +1,14 @@
+# Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+
+# This service calls the otafiles.sh script located in /etc/scripts/
+
+[Unit]
+Description= 730i OTA Unpack Service
+After=weston@root.service
+
+[Service]
+Type=oneshot
+ExecStart=/etc/scripts/ota-unpack.sh
+
+[Install]
+WantedBy=multi-user.target

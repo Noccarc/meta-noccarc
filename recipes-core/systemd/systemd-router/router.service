@@ -1,0 +1,16 @@
+# Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+
+# This service enables the router of ZMQ utility located at /usr/local/zmq
+# Should be executed before V730i UI service 
+
+[Unit]
+Description= 730i ZMQ Router Service
+Requires=weston@root.service
+before=ui.service
+
+[Service]
+Type=idle
+ExecStart=/usr/local/zmq/arm_router
+
+[Install]
+WantedBy=multi-user.target

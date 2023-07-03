@@ -104,7 +104,7 @@
 		led-0{
 			label = "status";
 			gpios = <&gpioa 15 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "cpu";
+			linux,default-trigger = "heartbeat";
 			default-state = "on";
 		};
 		
@@ -134,13 +134,28 @@
 			linux,default-trigger = "none";
 			default-state = "on";
 		};
-		
+
 		led-5{
-			label = "display";
-			gpios = <&gpiof 8 GPIO_ACTIVE_HIGH>;
+			label = "red-green";
+			gpios = <&gpiob 8 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "none";
 			default-state = "on";
 		};
+
+		led-6{
+			label = "red-blue";
+			gpios = <&gpiog 8 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "none";
+			default-state = "off";
+		};
+		
+		led-7{
+			label = "3v3-control";
+			gpios = <&gpiod 10 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "none";
+			default-state = "on";
+		};
+
 	};
 	
 	vin:vin{
@@ -541,16 +556,7 @@
 	clock-frequency = <400000>;
 	/delete-property/ dmas;
 	/delete-property/ dma-names;
-	
-	//bridge@2c {
-		//compatible = "tianma,nlb150xg01-01";
-		//status = "okay";
-		//reg = <0x2c>;
-		//power-supply = <&vdd>;
-		//enable-gpios = <&gpiob 10 GPIO_ACTIVE_HIGH>;
-		//host-dsi-node = <&dsi>;      
-    //};
-	
+		
 	pmic:stpmic@33{
 		compatible = "st,stpmic1";
 		reg = <0x33>;
@@ -685,7 +691,7 @@
 			compatible = "st,stpmic1-onkey";
 			interrupts = <IT_PONKEY_F 0>, <IT_PONKEY_R 0>;
 			interrupt-names = "onkey-falling", "onkey-rising";
-			power-off-time-sec = <10>;
+			power-off-time-sec = <12>;
 			status = "okay";
 		};
 
