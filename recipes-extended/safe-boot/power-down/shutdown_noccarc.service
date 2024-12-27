@@ -1,0 +1,12 @@
+[Unit]
+Description= 730i shutdown Service
+DefaultDependencies=no
+Before=shutdown.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/true
+ExecStop=/etc/scripts/power_down.sh 
+
+[Install]
+WantedBy=shutdown.target

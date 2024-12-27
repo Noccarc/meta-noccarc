@@ -1,0 +1,10 @@
+[Unit]
+Description= 730i Static Network Service
+Before=knob.service
+
+[Service]
+Type=idle
+ExecStart=/etc/scripts/eth-config.sh
+
+[Install]
+WantedBy=multi-user.target

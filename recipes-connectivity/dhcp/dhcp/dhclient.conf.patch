@@ -1,0 +1,19 @@
+--- dhclient.conf	2023-04-03 11:38:19.879605817 +0530
++++ dhclient_noccarc.conf	2023-04-03 11:39:34.208454931 +0530
+@@ -29,11 +29,11 @@
+ #media "-link0 -link1 -link2", "link0 link1";
+ #reject 192.33.137.209;
+ 
+-#alias {
+-#  interface "eth0";
+-#  fixed-address 192.5.5.213;
+-#  option subnet-mask 255.255.255.255;
+-#}
++alias {
++  interface "eth0";
++  fixed-address 192.168.0.1;
++  option subnet-mask 255.255.255.0;
++}
+ 
+ #lease {
+ #  interface "eth0";

@@ -1,3 +1,5 @@
 #!/bin/sh
 
-exec /usr/local/backend/scripts/backend_730i.sh
+exec /usr/local/HMIfiles/scripts/backend_run.sh
+
+ 

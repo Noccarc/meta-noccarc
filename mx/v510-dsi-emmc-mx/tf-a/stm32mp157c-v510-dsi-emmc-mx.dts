@@ -148,7 +148,7 @@
 		CLK_MCU_PLL3P
 		CLK_PLL12_HSE
 		CLK_PLL3_HSE
-		CLK_PLL4_HSE
+		CLK_PLL4_HSI
 		CLK_RTC_LSE
 		CLK_MCO1_DISABLED
 		CLK_MCO2_DISABLED
@@ -214,7 +214,7 @@
 	pll4:st,pll@3 {
 		compatible = "st,stm32mp1-pll";
 		reg = <3>;
-		cfg = < 3 98 5 8 7 PQR(1,1,0) >;
+		cfg = < 3 32 4 7 10 PQR(1,1,1) >;
 	};
 
 	/* USER CODE BEGIN rcc */

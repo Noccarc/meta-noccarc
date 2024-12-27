@@ -1,0 +1,344 @@
+--- basic_splash_drm.c	2023-01-24 19:31:10.177257455 +0530
++++ basic_splash_drm.c.changed	2023-01-31 17:22:08.954524512 +0530
+@@ -26,7 +26,7 @@
+ #include <sys/stat.h>
+ 
+ #include "image_header.h"
+-
++#include "noccarc_psplash.h"
+ 
+ #define SPLASH_FIFO "/tmp/splash_fifo"
+ 
+@@ -36,7 +36,7 @@
+ static int drm_fd;
+ static int pipe_fd;
+ static int wait = 0;
+-
++int old_progress = 0;
+ //----------------------
+ // Prototype
+ struct modeset_dev;
+@@ -54,8 +54,40 @@
+ 
+ static void splash_draw_image_center (void);
+ 
+-
+ //-------------------------------
++
++/*--------------------------Noccarc function declaration start-------------------------------*/
++
++void noccarc_splash_draw_progress_bar(
++    int progress, 
++    uint8_t color_red, 
++    uint8_t color_green, 
++    uint8_t color_blue);
++
++void noccarc_splash_draw_rectangle (
++        int x,
++        int y,
++        int rect_width,
++        int rect_height,
++        uint8_t c_r, uint8_t c_g, uint8_t c_b);
++
++void noccarc_splash_draw_progress_text(
++    int x, 
++    int y, 
++    uint8_t data, 
++    int red_text, int green_text, int blue_text);
++
++void noccarc_splash_draw_progress_percent(
++    int x,
++    int y, 
++    int red_text, int green_text, int blue_text);
++
++static void
++noccarc_splash_draw_image_center (
++    int image_code);
++
++/*---------------------------Noccarc function declaration end--------------------------------*/
++
+ // Modeset function
+ static int
+ modeset_open (int *out, const char *node)
+@@ -484,13 +516,13 @@
+             img_width = SPLASH_IMG_WIDTH;
+             img_height = SPLASH_IMG_HEIGHT;
+             img_bytes_per_pixel = SPLASH_IMG_BYTES_PER_PIXEL;
+-            rle_data = SPLASH_IMG_RLE_PIXEL_DATA;
++            rle_data = SPLASH_IMG_RLE_PIXEL_DATA_0;
+         } else {
+             /* Else portrait, ie. use image with 90 degree rotation */
+             img_width = SPLASH_IMG_ROT_WIDTH;
+             img_height = SPLASH_IMG_ROT_HEIGHT;
+             img_bytes_per_pixel = SPLASH_IMG_ROT_BYTES_PER_PIXEL;
+-            rle_data = SPLASH_IMG_ROT_RLE_PIXEL_DATA;
++            rle_data = SPLASH_IMG_ROT_RLE_PIXEL_DATA_0;
+         }
+ 
+         x = (iter->width - img_width) / 2;
+@@ -524,7 +556,7 @@
+     command = strtok(string," ");
+ 
+     if (!strcmp(command,"PROGRESS")) {
+-        //psplash_draw_progress (fb, atoi(strtok(NULL,"\0")));
++        noccarc_splash_draw_progress_bar (atoi(strtok(NULL,"\0")), 0xff, 0xff, 0xff); //Noccarc progress bar
+     }
+     else if (!strcmp(command,"MSG")) {
+         //psplash_draw_msg (fb, strtok(NULL,"\0"));
+@@ -596,6 +628,228 @@
+     return;
+ }
+ 
++/*------------------------Noccarc functions start-------------------------------*/
++static void
++noccarc_splash_draw_image_center (int image_code)
++{
++    struct modeset_dev *iter;
++    int img_width, img_height, img_bytes_per_pixel;
++    uint8_t *rle_data;
++    int x, y;
++    int i_code = image_code; 
++
++    for (iter = modeset_list; iter; iter = iter->next) {
++        if (iter->width >= iter->height) {
++            /* Default mode is landscape, ie. use image with no rotation */
++            img_width = SPLASH_IMG_WIDTH;
++            img_height = SPLASH_IMG_HEIGHT;
++            img_bytes_per_pixel = SPLASH_IMG_BYTES_PER_PIXEL;
++            switch(i_code) {
++
++                case 1:
++                    rle_data = SPLASH_IMG_RLE_PIXEL_DATA_1;
++                    break;
++
++                case 2:
++                    rle_data = SPLASH_IMG_RLE_PIXEL_DATA_2;
++                    break; 
++
++                default:
++                    rle_data = SPLASH_IMG_RLE_PIXEL_DATA_0;
++                    break;
++            }
++
++        } else {
++            /* Else portrait, ie. use image with 90 degree rotation */
++            img_width = SPLASH_IMG_ROT_WIDTH;
++            img_height = SPLASH_IMG_ROT_HEIGHT;
++            img_bytes_per_pixel = SPLASH_IMG_ROT_BYTES_PER_PIXEL;
++            switch(i_code) {
++
++                case 1:
++                    rle_data = SPLASH_IMG_ROT_RLE_PIXEL_DATA_1;
++                    break;
++
++                case 2:
++                    rle_data = SPLASH_IMG_ROT_RLE_PIXEL_DATA_2;
++                    break; 
++
++                default:
++                    rle_data = SPLASH_IMG_ROT_RLE_PIXEL_DATA_0;
++                    break;
++            }
++        }
++
++        x = (iter->width - img_width) / 2;
++        y = (iter->height - img_height) / 2;
++        splash_draw_image_for_modeset (iter, x, y, img_width, img_height,
++                img_bytes_per_pixel, rle_data);
++    }
++}
++
++
++void noccarc_splash_draw_progress_bar(int progress, uint8_t color_red, uint8_t color_green, uint8_t color_blue)
++{
++
++    int a,x_step,n_step;
++    uint8_t old_percent = 0;
++    uint8_t percent_progress =0;
++    uint8_t data1=0;
++    uint8_t data2=0;
++
++
++    if(progress > 100){ //progress time in milli seconds
++        // boot time is sent instead of progress
++        n_step = RECT_WIDTH;
++        x_step = (RECT_WIDTH/n_step);    // for 1 pixels at a time
++        
++        //draw "  0%"
++        noccarc_splash_draw_progress_text((TEXT_X+TEXT_SIZE_X*2), TEXT_Y, 0, 0xff, 0xff, 0xff); //0
++        noccarc_splash_draw_progress_percent((TEXT_X+TEXT_SIZE_X*3), TEXT_Y, 0xff, 0xff, 0xff); //percent
++        
++        for(a=RECT_X;a<(RECT_X+RECT_WIDTH);a+=x_step){
++            
++            // draw progress text after evert %
++            percent_progress = ((a-RECT_X+1)*100)/(RECT_WIDTH);
++
++            noccarc_splash_draw_rectangle(a, RECT_Y, x_step, RECT_HEIGHT, color_red, color_green, color_blue);
++            
++            if((percent_progress>old_percent) && percent_progress <=96){
++
++                old_progress = percent_progress;    // for Progrss loop 
++                data1 = (percent_progress%10);
++                noccarc_splash_draw_progress_text((TEXT_X+TEXT_SIZE_X*2), TEXT_Y, data1, 0xff, 0xff, 0xff);
++                if((percent_progress>=10)&&(percent_progress<100)){
++                    data2 = (percent_progress/10);
++                    noccarc_splash_draw_progress_text((TEXT_X+TEXT_SIZE_X), TEXT_Y, data2, 0xff, 0xff, 0xff);
++                }
++                if(percent_progress==100){
++                    noccarc_splash_draw_progress_text((TEXT_X+TEXT_SIZE_X), TEXT_Y, 0, 0xff, 0xff, 0xff);
++                    noccarc_splash_draw_progress_text((TEXT_X), TEXT_Y, 1, 0xff, 0xff, 0xff);
++                }
++                old_percent = percent_progress;
++            }
++            if(percent_progress >=96) return;
++            usleep((progress*800)/n_step);
++        }
++
++    }
++    else
++    {
++        if((progress - old_progress)>0){
++            // if only progress percent is given then go from n-1 to n taking n_step
++            n_step = (progress-old_progress)*RECT_WIDTH/100.0;
++            x_step = ((RECT_WIDTH*(progress- old_progress)/100.0)/n_step);    // for 1 % at a time
++
++            // check if old_progress is zero to fill % sign
++            if(old_progress==0) 
++                noccarc_splash_draw_progress_percent((TEXT_X+TEXT_SIZE_X*3), TEXT_Y, 0xff, 0xff, 0xff); //percent
++
++            for(a=(RECT_X+(old_progress*RECT_WIDTH/100.0));a<(RECT_X+(progress*RECT_WIDTH/100.0));a+=x_step){
++
++                // draw progress text after evert %
++                percent_progress = ((a-RECT_X+1)*100)/(RECT_WIDTH);
++                if(percent_progress- old_percent > 0)
++                {
++                    data1 = (percent_progress%10);
++                    noccarc_splash_draw_progress_text((TEXT_X+TEXT_SIZE_X*2), TEXT_Y, data1, 0xff, 0xff, 0xff);
++                    if((percent_progress>=10)&&(percent_progress<100)){
++                        data2 = (percent_progress/10);
++                        noccarc_splash_draw_progress_text((TEXT_X+TEXT_SIZE_X), TEXT_Y, data2, 0xff, 0xff, 0xff);
++                    }
++                    if(percent_progress==100){
++                        noccarc_splash_draw_progress_text((TEXT_X+TEXT_SIZE_X), TEXT_Y, 0, 0xff, 0xff, 0xff);
++                        noccarc_splash_draw_progress_text((TEXT_X), TEXT_Y, 1, 0xff, 0xff, 0xff);
++                    }
++                    old_percent = percent_progress;
++                }
++                noccarc_splash_draw_rectangle(a, RECT_Y, x_step, RECT_HEIGHT, color_red, color_green, color_blue);
++                usleep(2000);
++            }
++            old_progress = progress;
++        }
++    }
++
++    return;
++}
++
++// Draw function
++void noccarc_splash_draw_rectangle (
++        int x,
++        int y,
++        int rect_width,
++        int rect_height,
++        uint8_t c_r, uint8_t c_g, uint8_t c_b)
++{
++    struct modeset_dev *iter;
++    uint8_t r, g, b;
++    unsigned int j, k, off;
++
++    r = c_r & 0xff;
++    g = c_g & 0xff;
++    b = c_b & 0xff;
++
++    for (iter = modeset_list; iter; iter = iter->next) {
++        for (j = y; j < (y+rect_height); ++j) {
++            for (k = x; k < (x+rect_width); ++k) {
++                off = iter->stride * j + k * 4;
++                *(uint32_t *) & iter->map[off] = (r << 16) | (g << 8) | b;
++            }
++        }
++    }
++
++    return;
++}
++
++void noccarc_splash_draw_progress_text(int x, int y, uint8_t data , int red_text, int green_text, int blue_text){
++
++    struct modeset_dev *iter;
++    uint8_t r, g, b;
++    unsigned int j, k, off;
++    uint8_t value[][TEXT_SIZE_Y][TEXT_SIZE_X] = NUM_TO_PIX;
++
++    r = red_text & 0xff;
++    g = green_text & 0xff;
++    b = blue_text & 0xff;
++
++    for (iter = modeset_list; iter; iter = iter->next) {
++
++        for (j = y; j < (y+TEXT_SIZE_Y); ++j) {
++            for (k = x; k < (x+TEXT_SIZE_X); ++k) {
++                off = iter->stride * j + k * 4;
++                if(value[data][j-y][k-x]==1) *(uint32_t *) & iter->map[off] = (r << 16) | (g << 8) | b;
++                else *(uint32_t *) & iter->map[off] = 0;
++            }
++        }
++    }
++
++}
++void noccarc_splash_draw_progress_percent(int x, int y, int red_text, int green_text, int blue_text){
++
++    struct modeset_dev *iter;
++    uint8_t r, g, b;
++    unsigned int j, k, off;
++    uint8_t value[][PERCENT_X] = PERCENT;
++
++    r = red_text & 0xff;
++    g = green_text & 0xff;
++    b = blue_text & 0xff;
++
++    for (iter = modeset_list; iter; iter = iter->next) {
++
++        for (j = y; j < (y+PERCENT_Y); ++j) {
++            for (k = x; k < (x+PERCENT_X); ++k) {
++                off = iter->stride * j + k * 4;
++                if(value[j-y][k-x]==1) *(uint32_t *) & iter->map[off] = (r << 16) | (g << 8) | b;
++                else *(uint32_t *) & iter->map[off] = 0;
++            }
++        }
++    }
++
++}
++/*--------------------------Noccarc function end--------------------------------*/
++
++
+ //-------------------------------
+ // Main function
+ int
+@@ -670,12 +924,24 @@
+                     iter->conn, errno);
+     }
+ 
+-    /* draw some colors for 5seconds */
+-    modeset_draw_bgcolor (0xFF, 0xFF, 0xFF);
+-    splash_draw_image_center ();
++    
++    if (argc > 3){
++
++        // If argument is "/usr/bin/psplash-drm -w -t 5000" 5000 mSec 
++        if (!strncasecmp(argv[2], "-t",2)){                                 
++            noccarc_splash_draw_image_center(DEFAULT_SPLASH_IMAGE_INDEX);
++            noccarc_splash_draw_progress_bar (atoi(argv[3]), 0xff, 0xff, 0xff); 
++        }
+ 
++        //if argument is "/usr/bin/psplash-drm -w -i <image_code>"
++        if (!strncasecmp(argv[2], "-i",2)){
++            noccarc_splash_draw_image_center(atoi(argv[3]));
++        }
++    }
++    
+     splash_processing ();
+ 
++
+     /* cleanup everything */
+     modeset_cleanup (drm_fd);
+     close(pipe_fd);

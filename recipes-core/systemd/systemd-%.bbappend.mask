@@ -1,0 +1,5 @@
+do_configure_prepend() {
+echo append in systemd executed
+#disabling autostart of ip6tables	
+    #sed -i -e "s/enable ip6tables.service/disable ip6tables.service/g" ${D}/${systemd_unitdir}/system-preset/98-iptables.preset
+}

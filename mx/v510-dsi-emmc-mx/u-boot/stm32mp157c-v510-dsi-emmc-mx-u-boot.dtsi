@@ -87,7 +87,7 @@
 			/* USER CODE END clk_csi */
 		};
 		clk_lse: clk-lse {
-			st,drive = < LSEDRV_MEDIUM_HIGH >;
+			st,drive = < LSEDRV_LOWEST >;
 
 			/* USER CODE BEGIN clk_lse */
 			/* USER CODE END clk_lse */
@@ -181,7 +181,7 @@
 	pll4:st,pll@3 {
 		compatible = "st,stm32mp1-pll";
 		reg = <3>;
-		cfg = < 3 98 5 7 7 PQR(1,1,0) >;
+		cfg = < 3 32 4 7 10 PQR(1,1,1) >;
 		u-boot,dm-pre-reloc;
 	};
 

@@ -23,7 +23,7 @@ do_install() {
     install -d ${D}${systemd_unitdir}/system
     install -m 644 ${WORKDIR}/${MOUNT_BASENAME}.service ${D}/${systemd_unitdir}/system    
     install -m 755 ${WORKDIR}/${MOUNT_BASENAME}.sh ${D}/${sysconfdir}/scripts
-
+	
 }
 
 FILES_${PN} += "${systemd_unitdir} ${sysconfdir}/scripts"
