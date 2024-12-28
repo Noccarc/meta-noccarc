@@ -1,4 +1,7 @@
 # Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+
+# This recipe configures the ssh utility for auto-authentication over eth0 interface
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 AUTH_FILE = "authorized_keys"

@@ -1,3 +1,8 @@
+# Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+
+# This recipe adds timezones to target and configures default timezone
+# Also installs a timesync script to sync SOM system time with RTC
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SCRIPT = "timesync"

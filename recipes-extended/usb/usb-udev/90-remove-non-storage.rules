@@ -1,4 +1,8 @@
-#Remove all device except mass storage type
-KERNELS=="1-1:*", SUBSYSTEM=="usb", DRIVER!="usb-storage", ACTION!="remove", ACTION!="unbind", PROGRAM=="/bin/sh -c 'echo hello: %p > /dev/kmsg'", PROGRAM=="/bin/sh -c 'cd /sys%p && cd ../ && echo 1 > remove'"
-KERNELS=="2-1:*", SUBSYSTEM=="usb", DRIVER!="usb-storage", ACTION!="remove", ACTION!="unbind", PROGRAM=="/bin/sh -c 'echo hello: %p > /dev/kmsg'", PROGRAM=="/bin/sh -c 'cd /sys%p && cd ../ && echo 1 > remove'"
+# Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+# Remove all device except mass storage type.
+# Check both usb buses to scan for usb-storage device. All of the rest are removed. On system usb devices are supported.
+# Leave a footprint at dmesg when an unrecognised device is detected
+
+#KERNELS=="1-1:*", SUBSYSTEM=="usb", DRIVER!="usb-storage", ACTION!="remove", ACTION!="unbind", PROGRAM=="/bin/sh -c 'echo Unrecognised usb device at %p, removing.. > /dev/kmsg'", PROGRAM=="/bin/sh -c 'cd /sys%p && cd ../ && echo 1 > remove'"
+#KERNELS=="2-1:*", SUBSYSTEM=="usb", DRIVER!="usb-storage", ACTION!="remove", ACTION!="unbind", PROGRAM=="/bin/sh -c 'echo Unrecognised usb device at %p, removing.. > /dev/kmsg'", PROGRAM=="/bin/sh -c 'cd /sys%p && cd ../ && echo 1 > remove'"
 

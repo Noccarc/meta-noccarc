@@ -1,3 +1,8 @@
+# Copyright (C) 2022, Noccarc Robotics - All Rights Reserved
+
+# This service calls the remove-service.sh script
+# Should be called before ui.service
+
 [Unit]
 Description= Script to disable unused service
 Requires=weston@root.service
