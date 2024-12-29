@@ -11,4 +11,7 @@ sleep 1
 echo 0 > /sys/class/leds/led-blue/brightness
 sleep 1
 echo 0 > /sys/class/leds/led-green/brightness
+
+resize2fs /dev/mmcblk0p5
+
 exec /usr/local/scripts/knob_730i.sh

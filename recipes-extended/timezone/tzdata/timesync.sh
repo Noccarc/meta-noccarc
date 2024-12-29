@@ -1,5 +1,5 @@
 #!/bin/bash
-Iomt_date=$(ssh root@192.168.0.2 /bin/date)
+Iomt_date=$(ssh root@192.168.0.2 /bin/date -u)
 
 if [ $? -eq 0 ]
 then
@@ -7,9 +7,9 @@ then
 
         echo "System date time set"
 
-        hwclock --systohc --utc
+        rtc -s "`date -u`"
 
         echo "RTC clock set"
 else
-        echo "Unable to connect to IOMT. Faled setting HW clock."
+        echo "Unable to connect to IOMT. Failed setting HW clock."
 fi

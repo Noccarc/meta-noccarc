@@ -624,7 +624,7 @@
 				interrupts = <IT_PONKEY_F 0>, <IT_PONKEY_R 0>;
 				interrupt-names = "onkey-falling", "onkey-rising";
 				power-off-time-sec = <10>;
-				status = "okay";
+				status = "disabled";
 			};
 
 			watchdog{
