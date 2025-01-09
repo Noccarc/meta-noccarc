@@ -397,23 +397,23 @@
 	/* USER CODE END pinctrl_z */
 };
 
-// &timers13{
-// 	status = "okay";
+&timers13{
+	status = "okay";
 
-// 	/* USER CODE BEGIN timers13 */
-// 	/* USER CODE END timers13 */
+	/* USER CODE BEGIN timers13 */
+	/* USER CODE END timers13 */
 
-// 	pwm13:pwm{
-// 		pinctrl-names = "default", "sleep";
-// 		pinctrl-0 = <&tim13_pwm_pins_mx>;
-// 		pinctrl-1 = <&tim13_pwm_sleep_pins_mx>;
-// 		status = "okay";
+	pwm13:pwm{
+		pinctrl-names = "default", "sleep";
+		pinctrl-0 = <&tim13_pwm_pins_mx>;
+		pinctrl-1 = <&tim13_pwm_sleep_pins_mx>;
+		status = "okay";
 
-// 		/* USER CODE BEGIN timers13_pwm */
-// 		#pwm-cells = <2>;
-// 		/* USER CODE END timers13_pwm */
-// 	};
-// };
+		/* USER CODE BEGIN timers13_pwm */
+		#pwm-cells = <2>;
+		/* USER CODE END timers13_pwm */
+	};
+};
 
 &bsec{
 	status = "okay";
@@ -495,7 +495,6 @@
 		compatible = "tianma,nlb150xg01";
 		reg = <0>;
 		enable-gpios = <&gpiob 10 GPIO_ACTIVE_HIGH>;
-       // backlight-enable =<&gpiof 8 GPIO_ACTIVE_HIGH>;
 		power-supply = <&vdd>;
 		backlight = <&backlight>;
 		//pwms = <&pwm13>;
