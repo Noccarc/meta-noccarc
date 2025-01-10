@@ -495,10 +495,9 @@
 		compatible = "tianma,nlb150xg01";
 		reg = <0>;
 		enable-gpios = <&gpiob 10 GPIO_ACTIVE_HIGH>;
-		backlight-enable = <&gpiof 8 GPIO_ACTIVE_HIGH>;
+        backlight-enable =<&gpiof 8 GPIO_ACTIVE_HIGH>;
 		power-supply = <&vdd>;
 		backlight = <&backlight>;
-		
 		//pwms = <&pwm13>;
 		status = "okay";
 		port {
