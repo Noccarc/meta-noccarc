@@ -156,6 +156,13 @@
 			default-state = "on";
 		};
 		
+		led-8{
+			label = "backlight-control";
+			gpios = <&gpioe 15 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "none";
+			default-state = "on";
+		};
+		
 
 
 	};
@@ -172,12 +179,12 @@
 		stdout-path = "serial0:115200n8";
 	};
 	
-	// backlight:panel-backlight { 
-	// 	compatible = "gpio-backlight";
-	// 	power-supply = <&vdd>;
-	// 	gpios = <&gpioe 15 GPIO_ACTIVE_HIGH>;
-	// 	status = "okay";
-	// };
+	backlight:panel-backlight { 
+		compatible = "gpio-backlight";
+		power-supply = <&vdd>;
+		gpios = <&gpiof 8 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
 
 	
 	usb_phy_tuning:usb-phy-tuning{
@@ -341,20 +348,20 @@
 		};
 	};
 	
-	tim13_pwm_pins_mx: tim13_pwm_mx-0 {
-		pins {
-			pinmux = <STM32_PINMUX('F', 8, AF9)>; /* TIM13_CH1 */
-			bias-disable;
-			drive-push-pull;
-			slew-rate = <0>;
-		};
-	};
+	// tim13_pwm_pins_mx: tim13_pwm_mx-0 {
+	// 	pins {
+	// 		pinmux = <STM32_PINMUX('F', 8, AF9)>; /* TIM13_CH1 */
+	// 		bias-disable;
+	// 		drive-push-pull;
+	// 		slew-rate = <0>;
+	// 	};
+	// };
 
-	tim13_pwm_sleep_pins_mx: tim13_pwm_sleep_mx-0 {
-		pins {
-			pinmux = <STM32_PINMUX('F', 8, ANALOG)>; /* TIM13_CH1 */
-		};
-	};
+	// tim13_pwm_sleep_pins_mx: tim13_pwm_sleep_mx-0 {
+	// 	pins {
+	// 		pinmux = <STM32_PINMUX('F', 8, ANALOG)>; /* TIM13_CH1 */
+	// 	};
+	// };
 
 
 	/* USER CODE BEGIN pinctrl */
@@ -487,10 +494,10 @@
 		compatible = "tianma,nlb150xg01";
 		reg = <0>;
 		enable-gpios = <&gpiob 10 GPIO_ACTIVE_HIGH>;
-		backlight-enable = <&gpioe 15 GPIO_ACTIVE_HIGH>;
-        backlight-pwm =    <&gpiof 8 GPIO_ACTIVE_HIGH>;
+		// backlight-enable = <&gpioe 15 GPIO_ACTIVE_HIGH>;
+        // backlight-pwm =    <&gpiof 8 GPIO_ACTIVE_HIGH>;
 		power-supply = <&vdd>;
-		//backlight = <&backlight>;
+		backlight = <&backlight>;
 		//pwms = <&pwm13>;
 		status = "okay";
 		port {
