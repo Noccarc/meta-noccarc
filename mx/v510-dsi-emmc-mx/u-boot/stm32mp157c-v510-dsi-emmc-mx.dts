@@ -33,6 +33,11 @@
 		/* USER CODE BEGIN memory */
 		/* USER CODE END memory */
 	};
+	config {
+		lvds-gpios = <&gpiob 10 GPIO_ACTIVE_HIGH>;
+		backlight-gpios = <&gpioe 15 GPIO_ACTIVE_HIGH>;
+		pwm-gpios = <&gpiof 8 GPIO_ACTIVE_HIGH>;
+	};
 
 	reserved-memory {
 		#address-cells = <1>;
@@ -156,18 +161,18 @@
 			default-state = "on";
 		};
 		
-		led-8{
-			label = "backlight-control";
-			gpios = <&gpiof 8 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "none";
-			default-state = "on";
-		};
-		led-9{
-			label = "lvds-en";
-			gpios = <&gpiob 10 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "none";
-			default-state = "on";
-		};
+		// led-8{
+		// 	label = "backlight-control";
+		// 	gpios = <&gpiof 8 GPIO_ACTIVE_HIGH>;
+		// 	linux,default-trigger = "none";
+		// 	default-state = "on";
+		// };
+		// led-9{
+		// 	label = "lvds-en";
+		// 	gpios = <&gpiob 10 GPIO_ACTIVE_HIGH>;
+		// 	linux,default-trigger = "none";
+		// 	default-state = "on";
+		// };
 
 
 	};
@@ -507,7 +512,7 @@
 		compatible = "tianma,nlb150xg01";
 		reg = <0>;
 		//pinctrl-0 = <&panel_pins_mx>;
-		enable-gpios = <&gpioe 15 GPIO_ACTIVE_HIGH>;
+		//enable-gpios = <&gpioe 15 GPIO_ACTIVE_HIGH>;
 		//backlight-enable = <&gpioe 15 GPIO_ACTIVE_HIGH>;
         //backlight-pwm =    <&gpiof 8 GPIO_ACTIVE_HIGH>;
 		power-supply = <&vdd>;
