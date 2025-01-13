@@ -6,7 +6,7 @@ UBOOT_BRANCH = "v730i_som_1V2"
 SRC_URI = "${UBOOT_SRC};branch=${UBOOT_BRANCH} \
            file://stm32mp15_730isom_trusted_defconfig \
            "
-SRCREV = "e131e43a2617c433224fbd0d0781bbdb61d8c0ad"
+SRCREV = "4d5e927ac9e8d21428263d87a4aa9c7e93950fd7"
 #SRCREV = "10b7967da852c3e4a1f604db37e9acd5ab7b6a34"
 
 S = "${WORKDIR}/git"
