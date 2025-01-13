@@ -340,7 +340,15 @@
 			slew-rate = <0>;
 		};
 	};
-
+	panel_pins_mx: panel_mx-0 {
+		u-boot,dm-pre-reloc;
+		pins {
+			u-boot,dm-pre-reloc;
+			pinmux = <STM32_PINMUX('F', 8, AF0)>, /* SDMMC2_D4 */
+					 <STM32_PINMUX('E', 15, AF0)>, /* SDMMC2_D2 */
+					 <STM32_PINMUX('B', 10, AF0)>, /* SDMMC2_D3 */
+		};
+	};
 	uart7_sleep_pins_mx: uart7_sleep_mx-0 {
 		pins {
 			pinmux = <STM32_PINMUX('E', 7, ANALOG)>, /* UART7_RX */
@@ -493,6 +501,7 @@
 	panel@0 {
 		compatible = "tianma,nlb150xg01";
 		reg = <0>;
+		pinctrl-0 = <&panel_pins_mx>;
 		enable-gpios = <&gpiob 10 GPIO_ACTIVE_HIGH>;
 		backlight-enable = <&gpioe 15 GPIO_ACTIVE_HIGH>;
         backlight-pwm =    <&gpiof 8 GPIO_ACTIVE_HIGH>;
