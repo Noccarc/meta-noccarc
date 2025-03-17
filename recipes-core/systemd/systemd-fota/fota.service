@@ -7,6 +7,8 @@ after=backend.service
 Type=idle
 WorkingDirectory=/usr/local/zmq/FOTA_STM/
 ExecStart=python3 /usr/local/zmq/FOTA_STM/main.py
+Restart=always
+RestartSec=1
 
 [Install]
 WantedBy=multi-user.target
