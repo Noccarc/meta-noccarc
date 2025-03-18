@@ -651,20 +651,20 @@
 			   <&mdma1 39 0x0 0x40002 0x0 0x0 0>;
 		dma-names = "rx", "tx";
 
-		// polytouch: eegalax-ts@2a {
-		// 	compatible = "hid-over-i2c";
-		// 	reg = <0x2a>;
-		// 	hid-descr-addr = <0x000f>;
-		// 	interrupt-parent = <&gpioe>;
-		// 	interrupts = <13 IRQ_TYPE_LEVEL_LOW>;
+		polytouch: eegalax-ts@2a {
+			compatible = "hid-over-i2c";
+			reg = <0x2a>;
+			hid-descr-addr = <0x000f>;
+			interrupt-parent = <&gpioe>;
+			interrupts = <13 IRQ_TYPE_LEVEL_LOW>;
 
 
-		// 	touchscreen-size-x = <1024>;
-		// 	touchscreen-size-y = <768>;
-		// 	touchscreen-inverted-x;
-		// 	touchscreen-inverted-y;
-		// 	status="okay";
-		// };
+			touchscreen-size-x = <1024>;
+			touchscreen-size-y = <768>;
+			touchscreen-inverted-x;
+			touchscreen-inverted-y;
+			status="okay";
+		};
 
 		touchscreen@41 {
 			compatible = "ilitek,ili251x";
